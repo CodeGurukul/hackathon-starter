@@ -17,11 +17,12 @@ block content
       each product, index in products
         tr
           th(scope='row')= index+1
-          td= product.name
+          td
+            a(href="/products/"+product._id)= product.name
           td= product.category
           td= product.description
           td= product.cost + ' INR'
           td 
-            a.btn.btn-sm.btn-info(href='/products/'+index+'/edit') Edit
+            a.btn.btn-sm.btn-info(href='/products/'+product._id+'/edit') Edit
           td 
-            a.btn.btn-sm.btn-danger(href='/products/#{index}/delete') Delete
+            a.btn.btn-sm.btn-danger(href='/products/'+product._id+'/delete') Delete

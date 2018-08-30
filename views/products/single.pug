@@ -28,5 +28,5 @@ block content
       .col-md-6
         h5 Action:
       .col-md-6
-        .btn.btn-sm.btn-info Edit
-        .btn.btn-sm.btn-danger Delete
+        a.btn.btn-sm.btn-info(href="/products/"+product._id+"/edit") Edit
+        a.btn.btn-sm.btn-danger(href="/products/"+product._id+"/delete") Delete

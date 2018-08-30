@@ -1,10 +1,14 @@
-const {products} = require('../config/data')
+const { products: productArray } = require('../config/data')
+const Product = require('../models/Product')
 
 exports.getAllProducts = (request, response) => {
-    response.render('products/list', {
-        title: 'All Products',
-        products
+    Product.find({}, (error, products) => {
+        response.render('products/list', {
+            title: 'All Products',
+            products
+        })
     })
+
 }
 
 exports.getNewProduct = (request, response) => {
@@ -13,35 +17,92 @@ exports.getNewProduct = (request, response) => {
     })
 }
 
+exports.postNewProduct = (request, response) => {
+    const { name, category, description, cost } = request.body
+    var product = new Product({
+        name,
+        category,
+        description,
+        cost
+    })
+    product.save().then(() => {
+        response.redirect('/products')
+    });
+
+}
+
 exports.getProductById = (request, response) => {
-    if(request.params.id<0 || request.params.id >= products.length)
-    {
-        response.render('404', {
-            title: '404'
-        })
-    }
-    else {
-        var product = products[request.params.id]
-        response.render('products/single', {
-            title: 'Product Page',
-            product: product
-        })
-    }
-    
+    Product.findById(request.params.id, (error, product) => {
+        if (error)
+            response.render('500', {
+                title: '500 server error',
+                error: error
+            })
+        else {
+            console.log(product)
+            response.render('products/single', {
+                title: 'Product Page',
+                product: product
+            })
+        }
+
+    })
 }
 
 exports.getEditProductById = (request, response) => {
-    if(request.params.id<0 || request.params.id >= products.length)
-    {
-        response.render('404', {
-            title: '404'
-        })
-    }
-    else {
-        var product = products[request.params.id]
-        response.render('products/edit', {
-            title: 'Products Edit Page',
-            product: product
-        })
-    }
+    Product.findById(request.params.id, (error, product) => {
+        if (error)
+            response.render('500', {
+                title: '500 server error',
+                error: error
+            })
+        else {
+            console.log(product)
+            response.render('products/edit', {
+                title: 'Edit Product',
+                product: product
+            })
+        }
+
+    })
+}
+exports.postDeleteProductById = (request, response) => {
+    Product.deleteOne({_id: request.params.id}, (error) =>{
+        if (error)
+            response.render('500', {
+                title: '500 server error',
+                error: error
+            })
+        else {
+            response.redirect('/products')
+        }
+    })
+}
+exports.postEditProductById = (request, response) => {
+    const { name, category, description, cost } = request.body
+    Product.findById(request.params.id, (error, product) => {
+        if (error)
+            response.render('500', {
+                title: '500 server error',
+                error: error
+            })
+        else {
+            if (product) {
+                product.name = name || product.name
+                product.category = category || product.category
+                product.cost = cost || product.cost
+                product.description = description || product.description
+                product.save().then(() =>{
+                    response.render('products/edit', {
+                        title: 'Edit Product',
+                        product: product
+                    })
+                })
+            }
+            else {
+                response.redirect('/products')
+            }
+        }
+
+    })
 }

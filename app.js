@@ -144,8 +144,11 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 //List of all products
 app.get('/products', productController.getAllProducts)
 app.get('/products/new', productController.getNewProduct)
+app.post('/products/new', productController.postNewProduct)
 app.get('/products/:id', productController.getProductById)
 app.get('/products/:id/edit', productController.getEditProductById)
+app.post('/products/:id/edit', productController.postEditProductById)
+app.get('/products/:id/delete', productController.postDeleteProductById)
 
 /**
  * API examples routes.
