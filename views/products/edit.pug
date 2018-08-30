@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Edit Product
+
+  form(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group.row
+      label(class='col-md-2 col-form-label font-weight-bold', for='name') Name
+      .col-md-8
+        input.form-control(type='text', name='name', id='name', value=product.name, autocomplete='name', autofocus=true)
+    .form-group.row
+      label(class='col-md-2 col-form-label font-weight-bold', for='cost') Cost
+      .col-md-8
+        input.form-control(type='text', name='cost', id='cost', value=product.cost, autocomplete='cost')
+    .form-group.row
+      label(class='col-md-2 col-form-label font-weight-bold', for='category') Category
+      .col-md-8
+        input.form-control(type='text', name='category', id='category', value=product.category, autocomplete='category')
+    .form-group.row
+      label(class='col-md-2 col-form-label font-weight-bold', for='description') Description
+      .col-md-8
+        textarea.form-control(name='description', id='description', rows='7')= product.description
+    .form-group
+      .offset-md-2.col-md-8.p-1
+        button.btn.btn-primary(type='submit')
+          i.far.fa-envelope.fa-sm
+          | Update

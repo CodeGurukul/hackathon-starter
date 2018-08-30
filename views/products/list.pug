@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Product List
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Name
+        th(scope='col') Category
+        th(scope='col') Description
+        th(scope='col') Cost
+        th(scope='col') #
+        th(scope='col') #
+    tbody
+      each product, index in products
+        tr
+          th(scope='row')= index+1
+          td= product.name
+          td= product.category
+          td= product.description
+          td= product.cost + ' INR'
+          td 
+            a.btn.btn-sm.btn-info(href='/products/'+index+'/edit') Edit
+          td 
+            a.btn.btn-sm.btn-danger(href='/products/#{index}/delete') Delete

@@ -34,6 +34,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const productController = require('./controllers/product');
 
 /**
  * API keys and Passport configuration.
@@ -139,6 +140,12 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+
+//List of all products
+app.get('/products', productController.getAllProducts)
+app.get('/products/new', productController.getNewProduct)
+app.get('/products/:id', productController.getProductById)
+app.get('/products/:id/edit', productController.getEditProductById)
 
 /**
  * API examples routes.
